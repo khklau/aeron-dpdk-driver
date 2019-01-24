@@ -16,24 +16,32 @@ digraph aeron_media_driver {
         fillcolor = "#ccccff";
         label = "driver";
         conductor [ label="conductor" shape="record" ];
-        conductor_proxy [ label="conductor_proxy" shape="record" ];
         receiver [ label="receiver" shape="record" ];
         receiver_proxy [ label="receiver_proxy" shape="record" ];
         runner [ label="runner" shape="record" ];
         sender [ label="sender" shape="record" ];
-        sender_proxy [ label="sender_proxy" shape="record" ];
     }
 
     subgraph cluster_conductor {
         style = filled;
         fillcolor = "#ffffcc";
         label = "conductor";
-        clients [ label="clients" shape="record" ];
         broadcast_transmitter [ label="broadcast_transmitter" shape="record" ];
+        clients [ label="clients" shape="record" ];
+        conductor_proxy [ label="conductor_proxy" shape="record" ];
         counters_manager [ label="counters_manager" shape="record" ];
         error_log [ label="error_log" shape="record" ];
         loss_reporter [ label="loss_reporter" shape="record" ];
         system_counters [ label="system_counters" shape="record" ];
+    }
+
+    subgraph cluster_sender {
+        style = filled;
+        fillcolor = "#d2b48c";
+        label = "sender";
+        recv_buffers [ label="recv_buffers" shape="record" ];
+        sender_proxy [ label="sender_proxy" shape="record" ];
+        udp_transport_poller [ label="udp_transport_poller" shape="record" ];
     }
 
     subgraph cluster_media {
@@ -142,12 +150,14 @@ digraph aeron_media_driver {
     send_channel_endpoint -> sender_proxy [ arrowhead="box" style="dashed" ];
     send_channel_endpoint -> udp_channel_transport [ arrowhead="box" style="solid" ];
     send_channel_endpoint -> udp_destination_tracker [ arrowhead="box" style="solid" ];
+    sender -> network_publication [ arrowhead="box" style="dashed" ];
     sender -> sender_proxy [ arrowhead="box" style="solid" ];
+    sender -> udp_transport_poller [ arrowhead="box" style="solid" ];
     sender_proxy -> sender_command [ arrowhead="box" style="dashed" ];
     system_counters -> counters_manager [ arrowhead="box" style="dashed" ];
     to_clients_buffer -> cnc_file [ arrowhead="box" style="dashed" ];
     to_driver_buffer -> cnc_file [ arrowhead="box" style="dashed" ];
     to_driver_command -> to_driver_buffer [ arrowhead="box" style="dashed" ];
     udp_channel_transport -> fd [ arrowhead="box" style="solid" ];
+    udp_transport_poller -> udp_channel_transport [ arrowhead="box" style="dashed" ];
 }
-
