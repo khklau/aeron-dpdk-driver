@@ -1,0 +1,8 @@
+[package]
+name = "aeron-dpdk-driver"
+version = "0.1.0"
+authors = ["Kean H Lau <khklau@users.noreply.github.com>"]
+edition = "2018"
+
+[dependencies]
+clap = "2.32.0"
