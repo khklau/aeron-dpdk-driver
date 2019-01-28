@@ -43,6 +43,8 @@ digraph aeron_media_driver {
 
         driver [ label="driver" shape="none" fontsize=24 ];
 
+        agent_runners [ label="agent_runners" shape="box3d" ];
+
         subgraph cluster_conductor {
             style = filled;
             fillcolor = "#ffffcc";
@@ -64,8 +66,12 @@ digraph aeron_media_driver {
 
                 media [ label="media" shape="none" fontsize=24 ];
 
-                send_channel_endpoints [ label="send_channel_endpoints " shape="box3d" ]
-                udp_channel_transport [ label="udp_channel_transport" shape="record" ];
+                subgraph cluster_receive_channel_endpoints {
+                    style = filled;
+                    fillcolor = "#ccffff";
+
+                    receive_channel_endpoints [ label="receive_channel_endpoints" shape="none" fontsize=20 ];
+                }
 
                 subgraph cluster_send_channel_endpoints {
                     style = filled;
@@ -101,30 +107,52 @@ digraph aeron_media_driver {
             }
         }
 
+        subgraph cluster_receiver {
+            style = filled;
+            fillcolor = "#d2b48c";
+
+            receiver [ label="receiver" shape="none" fontsize=24 ];
+
+            receiver_recv_buffers [ label="recv_buffers" shape="record" ];
+            receiver_proxy [ label="receiver_proxy" shape="record" ];
+
+            subgraph cluster_receiver_udp_transport_poller {
+                style = filled;
+                fillcolor = "#d2b48c";
+
+                receiver_udp_transport_poller [ label="udp_transport_poller" shape="none" fontsize=20 ];
+
+                receiver_epoll_fd [ label="epoll_fd" shape="larrow" ];
+            }
+        }
+
         subgraph cluster_sender {
             style = filled;
             fillcolor = "#d2b48c";
 
             sender [ label="sender" shape="none" fontsize=24 ];
 
-            sender_network_publications [ label="sender_network_publications? " shape="box3d" ];
-            recv_buffers [ label="recv_buffers" shape="record" ];
+            sender_recv_buffers [ label="recv_buffers" shape="record" ];
             sender_proxy [ label="sender_proxy" shape="record" ];
-            udp_transport_poller [ label="udp_transport_poller" shape="record" ];
 
-
-            subgraph cluster_udp_transport_poller {
+            subgraph cluster_sender_udp_transport_poller {
                 style = filled;
                 fillcolor = "#d2b48c";
 
-                udp_transport_poller [ label="udp_transport_poller" shape="none" fontsize=20 ];
+                sender_udp_transport_poller [ label="udp_transport_poller" shape="none" fontsize=20 ];
 
-                epoll_fd [ label="epoll_fd" shape="larrow" ];
+                sender_epoll_fd [ label="epoll_fd" shape="larrow" ];
             }
         }
 
-        sender_proxy -> system_counters;
-        udp_transport_poller -> udp_channel_transport;
+        agent_runners -> conductor [ lhead=cluster_conductor ];
+        agent_runners -> conductor_idle_strategy;
+        agent_runners -> receiver [ lhead=cluster_receiver ];
+        agent_runners -> receiver_idle_strategy;
+        agent_runners -> sender [ lhead=cluster_sender ];
+        agent_runners -> sender_idle_strategy;
+        receiver_udp_transport_poller -> udp_channel_transport;
+        sender_udp_transport_poller -> udp_channel_transport;
     }
 
     conductor -> context [ ltail=cluster_conductor, lhead=cluster_context ];
@@ -135,9 +163,15 @@ digraph aeron_media_driver {
     driver -> context [ ltail=cluster_driver, lhead=cluster_context ]
     error_log -> error_buffer;
     loss_reporter -> loss_report_file;
+    receiver -> context [ ltail=cluster_receiver, lhead=cluster_context ];
+    receiver -> error_log [ ltail=cluster_receiver ];
+    receiver -> publication_images [ ltail=cluster_receiver];
+    receiver -> receive_channel_endpoints [ ltail=cluster_receiver];
+    receiver_proxy -> receiver_command_queue;
     send_channel_endpoints -> sender_proxy;
     sender -> context [ ltail=cluster_sender, lhead=cluster_context ];
     sender -> error_log [ ltail=cluster_sender ];
+    sender -> network_publications [ ltail=cluster_sender ];
     sender_proxy -> sender_command_queue; 
     system_counters -> counters_manager;
     to_clients_broadcast_transmitter -> to_clients_buffer;
