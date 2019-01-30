@@ -4,6 +4,23 @@ digraph aeron_media_driver {
     rankdir=LR;
     compound=true;
 
+    subgraph cluster_command {
+        style = filled;
+        fillcolor = "#cccccc";
+
+        command [ label="command" shape="none" fontsize=24 ];
+
+        correlated_command [ label="correlated_command" shape="record" ];
+        counter_command [ label="counter_command" shape="record" ];
+        destination_command [ label="destination_command" shape="record" ];
+        image_buffers_ready [ label="image_buffers_ready" shape="record" ];
+        operation_succeeded [ label="operation_succeeded" shape="record" ];
+        publication_buffers_ready [ label="publication_buffers_ready" shape="record" ];
+        publication_command [ label="publication_command" shape="record" ];
+        remove_command [ label="remove_command" shape="record" ];
+        subscription_command [ label="subscription_command" shape="record" ];
+    }
+
     subgraph cluster_context {
         style = filled;
         fillcolor = "#ffcccc";
@@ -43,7 +60,14 @@ digraph aeron_media_driver {
 
         driver [ label="driver" shape="none" fontsize=24 ];
 
-        agent_runners [ label="agent_runners" shape="box3d" ];
+        subgraph cluster_agent_runners {
+            style = filled;
+            fillcolor = "#ffcc99";
+
+            agent_runners [ label="agent_runners" shape="none" fontsize=24 ];
+
+            pthread_t [ label="pthread_t" shape="larrow" ];
+        }
 
         subgraph cluster_conductor {
             style = filled;
@@ -62,20 +86,20 @@ digraph aeron_media_driver {
 
             subgraph cluster_media {
                 style = filled;
-                fillcolor = "#ccffff";
+                fillcolor = "#99ccff";
 
                 media [ label="media" shape="none" fontsize=24 ];
 
                 subgraph cluster_receive_channel_endpoints {
                     style = filled;
-                    fillcolor = "#ccffff";
+                    fillcolor = "#99ccff";
 
                     receive_channel_endpoints [ label="receive_channel_endpoints" shape="none" fontsize=20 ];
                 }
 
                 subgraph cluster_send_channel_endpoints {
                     style = filled;
-                    fillcolor = "#ccffff";
+                    fillcolor = "#99ccff";
 
                     send_channel_endpoints [ label="send_channel_endpoints" shape="none" fontsize=20 ];
 
@@ -83,7 +107,7 @@ digraph aeron_media_driver {
 
                     subgraph cluster_udp_channel_transport {
                         style = filled;
-                        fillcolor = "#ccffff";
+                        fillcolor = "#99ccff";
 
                         udp_channel_transport [ label="udp_channel_transport" shape="none" fontsize=16 ];
 
@@ -94,7 +118,7 @@ digraph aeron_media_driver {
 
             subgraph cluster_pubsub {
                 style = filled;
-                fillcolor = "#ffcc99";
+                fillcolor = "#99ffcc";
 
                 pubsub [ label="publications and subscriptions" shape="none" fontsize=24 ];
 
@@ -145,17 +169,19 @@ digraph aeron_media_driver {
             }
         }
 
-        agent_runners -> conductor [ lhead=cluster_conductor ];
-        agent_runners -> conductor_idle_strategy;
-        agent_runners -> receiver [ lhead=cluster_receiver ];
-        agent_runners -> receiver_idle_strategy;
-        agent_runners -> sender [ lhead=cluster_sender ];
-        agent_runners -> sender_idle_strategy;
+        agent_runners -> conductor [ ltail=cluster_agent_runners, lhead=cluster_conductor ];
+        agent_runners -> conductor_idle_strategy [ ltail=cluster_agent_runners ];
+        agent_runners -> receiver [ ltail=cluster_agent_runners, lhead=cluster_receiver ];
+        agent_runners -> receiver_idle_strategy [ ltail=cluster_agent_runners ];
+        agent_runners -> sender [ ltail=cluster_agent_runners, lhead=cluster_sender ];
+        agent_runners -> sender_idle_strategy [ ltail=cluster_agent_runners ];
         receiver_udp_transport_poller -> udp_channel_transport;
         sender_udp_transport_poller -> udp_channel_transport;
     }
 
     conductor -> context [ ltail=cluster_conductor, lhead=cluster_context ];
+    conductor -> to_client_interceptor [ ltail=cluster_conductor ];
+    conductor -> to_driver_interceptor [ ltail=cluster_conductor ];
     conductor_proxy -> conductor_command_queue;
     conductor_proxy -> counters_manager;
     counters_manager -> counters_metadata_buffer;
