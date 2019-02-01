@@ -1,6 +1,6 @@
 digraph aeron_media_driver {
 
-    ranksep=1.5;
+    ranksep=2.0;
     rankdir=LR;
     compound=true;
 
@@ -103,8 +103,6 @@ digraph aeron_media_driver {
 
                     send_channel_endpoints [ label="send_channel_endpoints" shape="none" fontsize=20 ];
 
-                    udp_destination_tracker [ label="udp_destination_tracker" shape="record" ];
-
                     subgraph cluster_udp_channel_transport {
                         style = filled;
                         fillcolor = "#99ccff";
@@ -112,6 +110,15 @@ digraph aeron_media_driver {
                         udp_channel_transport [ label="udp_channel_transport" shape="none" fontsize=16 ];
 
                         udp_fd [ label="udp_fd" shape="larrow" ];
+                    }
+
+                    subgraph cluster_udp_destination_tracker {
+                        style = filled;
+                        fillcolor = "#99ccff";
+
+                        udp_destination_tracker [ label="udp_destination_tracker" shape="none" fontsize=16 ];
+
+                        udp_destinations [ label="udp_destinations" shape="box3d" ];
                     }
                 }
             }
@@ -122,13 +129,43 @@ digraph aeron_media_driver {
 
                 pubsub [ label="publications and subscriptions" shape="none" fontsize=24 ];
 
-                ipc_publications [ label="ipc_publications " shape="box3d" ];
                 ipc_subscriptions [ label="ipc_subscriptions " shape="box3d" ];
-                network_publications [ label="network_publications " shape="box3d" ];
                 network_subscriptions [ label="network_subscriptions " shape="box3d" ];
-                publication_images [ label="publication_images " shape="box3d" ];
                 spy_subscriptions [ label="spy_subscriptions " shape="box3d" ];
+
+                subgraph cluster_ipc_publications {
+                    style = filled;
+                    fillcolor = "#99ffcc";
+
+                    ipc_publications [ label="ipc_publications" shape="none" fontsize=20 ];
+
+                    ip_mapped_raw_log [ label="mapped_raw_log" shape="doubleoctagon" ];
+                }
+
+                subgraph cluster_network_publications {
+                    style = filled;
+                    fillcolor = "#99ffcc";
+
+                    network_publications [ label="network_publications" shape="none" fontsize=20 ];
+
+                    np_mapped_raw_log [ label="mapped_raw_log" shape="doubleoctagon" ];
+                }
+
+                subgraph cluster_publication_images {
+                    style = filled;
+                    fillcolor = "#99ffcc";
+
+                    publication_images [ label="publication_images" shape="none" fontsize=20 ];
+
+                    loss_detector [ label="loss_detector" shape="record" ];
+                    pi_mapped_raw_log [ label="mapped_raw_log" shape="doubleoctagon" ];
+
+                    loss_detector -> pi_mapped_raw_log;
+                }
             }
+
+            publication_images -> receive_channel_endpoints;
+            network_publications -> send_channel_endpoints;
         }
 
         subgraph cluster_receiver {
@@ -179,6 +216,15 @@ digraph aeron_media_driver {
         sender_udp_transport_poller -> udp_channel_transport;
     }
 
+    subgraph cluster_protocol {
+        style = filled;
+        fillcolor = "#cccccc";
+
+        protocol [ label="protocol" shape="none" fontsize=24 ];
+
+        setup_header [ label="setup_header" shape="record" ];
+    }
+
     conductor -> context [ ltail=cluster_conductor, lhead=cluster_context ];
     conductor -> to_client_interceptor [ ltail=cluster_conductor ];
     conductor -> to_driver_interceptor [ ltail=cluster_conductor ];
@@ -189,6 +235,9 @@ digraph aeron_media_driver {
     driver -> context [ ltail=cluster_driver, lhead=cluster_context ]
     error_log -> error_buffer;
     loss_reporter -> loss_report_file;
+    network_publications -> multicast_flow_control;
+    network_publications -> unicast_flow_control;
+    publication_images -> congestion_control;
     receiver -> context [ ltail=cluster_receiver, lhead=cluster_context ];
     receiver -> error_log [ ltail=cluster_receiver ];
     receiver -> publication_images [ ltail=cluster_receiver];
@@ -202,5 +251,5 @@ digraph aeron_media_driver {
     system_counters -> counters_manager;
     to_clients_broadcast_transmitter -> to_clients_buffer;
     to_driver_commands -> to_driver_buffer;
-    udp_destination_tracker -> receiver_id;
+    udp_destinations -> receiver_id;
 }
