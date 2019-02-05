@@ -95,6 +95,17 @@ digraph aeron_media_driver {
                     fillcolor = "#99ccff";
 
                     receive_channel_endpoints [ label="receive_channel_endpoints" shape="none" fontsize=20 ];
+
+                    data_packet_dispatcher [ label="data_packet_dispatcher" shape="record" ];
+
+                    subgraph cluster_receive_udp_channel_transport {
+                        style = filled;
+                        fillcolor = "#99ccff";
+
+                        receive_udp_channel_transport [ label="udp_channel_transport" shape="none" fontsize=16 ];
+
+                        receive_udp_fd [ label="udp_fd" shape="larrow" ];
+                    }
                 }
 
                 subgraph cluster_send_channel_endpoints {
@@ -103,13 +114,13 @@ digraph aeron_media_driver {
 
                     send_channel_endpoints [ label="send_channel_endpoints" shape="none" fontsize=20 ];
 
-                    subgraph cluster_udp_channel_transport {
+                    subgraph cluster_send_udp_channel_transport {
                         style = filled;
                         fillcolor = "#99ccff";
 
-                        udp_channel_transport [ label="udp_channel_transport" shape="none" fontsize=16 ];
+                        send_udp_channel_transport [ label="udp_channel_transport" shape="none" fontsize=16 ];
 
-                        udp_fd [ label="udp_fd" shape="larrow" ];
+                        send_udp_fd [ label="udp_fd" shape="larrow" ];
                     }
 
                     subgraph cluster_udp_destination_tracker {
@@ -212,8 +223,8 @@ digraph aeron_media_driver {
         agent_runners -> receiver_idle_strategy [ ltail=cluster_agent_runners ];
         agent_runners -> sender [ ltail=cluster_agent_runners, lhead=cluster_sender ];
         agent_runners -> sender_idle_strategy [ ltail=cluster_agent_runners ];
-        receiver_udp_transport_poller -> udp_channel_transport;
-        sender_udp_transport_poller -> udp_channel_transport;
+        receiver_udp_transport_poller -> receive_udp_channel_transport;
+        sender_udp_transport_poller -> send_udp_channel_transport;
     }
 
     subgraph cluster_protocol {
@@ -222,7 +233,11 @@ digraph aeron_media_driver {
 
         protocol [ label="protocol" shape="none" fontsize=24 ];
 
+        data_header [ label="data_header" shape="record" ];
+        nak_header [ label="nak_header" shape="record" ];
+        rttm_header [ label="rttm_header" shape="record" ];
         setup_header [ label="setup_header" shape="record" ];
+        status_message_header [ label="status_message_header" shape="record" ];
     }
 
     conductor -> context [ ltail=cluster_conductor, lhead=cluster_context ];
