@@ -6,3 +6,5 @@ edition = "2018"
 
 [dependencies]
 clap = "2.32.0"
+crossbeam = "0.7.1"
+memmap = "0.7.0"
