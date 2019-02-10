@@ -1,12 +1,12 @@
 digraph add_publication_sequence_diagram {
   client__head [ label="Client" pos="0,0!" shape="record" ];
   client__write [ pos="0,-1!" shape="point" width="0" ]
-  client__foot [ label="Client" pos="0,-16!" shape="record" ];
+  client__foot [ label="Client" pos="0,-17!" shape="record" ];
   to_driver_ringbuf__head [ label="To Driver Ringbuf" pos="3,0!" shape="record" ];
   to_driver_ringbuf__write [ pos="3,-1!" shape="point" width="0" ]
   to_driver_ringbuf__read [ pos="3,-2!" shape="point" width="0" ]
   to_driver_ringbuf__on_command [ pos="3,-3!" shape="point" width="0" ]
-  to_driver_ringbuf__foot [ label="To Driver Ringbuf" pos="3,-16!" shape="record" ];
+  to_driver_ringbuf__foot [ label="To Driver Ringbuf" pos="3,-17!" shape="record" ];
   conductor__head [ label="Conductor" pos="6,0!" shape="record" ];
   conductor__loop_begin [ pos="6,-1!" shape="point" width="0" ];
   conductor__ret_loop_begin [ pos="6.5,-1!" shape="point" width="0" ];
@@ -16,47 +16,51 @@ digraph add_publication_sequence_diagram {
   conductor__ret_get_add [ pos="6,-5!" shape="point" width="0" ]
   conductor__create [ pos="6,-6!" shape="point" width="0" ]
   conductor__ret_create [ pos="6,-12!" shape="point" width="0" ]
-  conductor__loop_end [ pos="6,-15!" shape="point" width="0" ];
-  conductor__ret_loop_end [ pos="6.5,-15!" shape="point" width="0" ];
-  conductor__foot [ label="Conductor" pos="6,-16!" shape="record" ];
-  send_channel_endpoint__head [ label="Send Channel Endpoint" pos="9,0!" shape="record" ];
-  send_channel_endpoint__get_add [ pos="9,-4!" shape="point" width="0" ]
-  send_channel_endpoint__ret_get_add [ pos="9,-5!" shape="point" width="0" ]
-  send_channel_endpoint__add_pub [ pos="9,-13!" shape="point" width="0" ]
-  send_channel_endpoint__ret_add_pub [ pos="9,-14!" shape="point" width="0" ]
-  send_channel_endpoint__foot [ label="Send Channel Endpoint" pos="9,-16!" shape="record" ];
-  network_publication__head [ label="Network Publication" pos="12,0!" shape="record" ];
-  network_publication__create [ pos="12,-6!" shape="point" width="0" ]
-  network_publication__mmap [ pos="12,-7!" shape="point" width="0" ]
-  network_publication__ret_mmap [ pos="12,-8!" shape="point" width="0" ]
-  network_publication__on_add [ pos="12,-9!" shape="point" width="0" ]
-  network_publication__ret_on_add [ pos="12,-11!" shape="point" width="0" ]
-  network_publication__ret_create [ pos="12,-12!" shape="point" width="0" ]
-  network_publication__foot [ label="Network Publication" pos="12,-16!" shape="record" ];
-  publication_log__head [ label="Publication Log File" pos="15,0!" shape="record" ];
-  publication_log__mmap [ pos="15,-7!" shape="point" width="0" ]
-  publication_log__ret_mmap [ pos="15,-8!" shape="point" width="0" ]
-  publication_log__foot [ label="Publication Log File" pos="15,-16!" shape="record" ];
-  sender_proxy__head [ label="Sender Proxy" pos="18,0!" shape="record" ];
-  sender_proxy__on_add [ pos="18,-9!" shape="point" width="0" ]
-  sender_proxy__offer [ pos="18,-10!" shape="point" width="0" ]
-  sender_proxy__ret_on_add [ pos="18,-11!" shape="point" width="0" ]
-  sender_proxy__foot [ label="Sender Proxy" pos="18,-16!" shape="record" ];
-  sender_command_queue__head [ label="Sender Command Queue" pos="21,0!" shape="record" ];
-  sender_command_queue__offer [ pos="21,-10!" shape="point" width="0" ]
-  sender_command_queue__drain [ pos="21,-11!" shape="point" width="0" ]
-  sender_command_queue__on_command [ pos="21,-12!" shape="point" width="0" ]
-  sender_command_queue__foot [ label="Sender Command Queue" pos="21,-16!" shape="record" ];
-  sender__head [ label="Sender" pos="24,0!" shape="record" ];
-  sender__loop_begin [ pos="24,-1!" shape="point" width="0" ];
-  sender__ret_loop_begin [ pos="24.5,-1!" shape="point" width="0" ];
-  sender__drain [ pos="24,-11!" shape="point" width="0" ]
-  sender__on_command [ pos="24,-12!" shape="point" width="0" ]
-  sender__add_pub [ pos="24,-13!" shape="point" width="0" ]
-  sender__ret_add_pub [ pos="24,-14!" shape="point" width="0" ]
-  sender__loop_end [ pos="24,-15!" shape="point" width="0" ];
-  sender__ret_loop_end [ pos="24.5,-15!" shape="point" width="0" ];
-  sender__foot [ label="Sender" pos="24,-16!" shape="record" ];
+  conductor__broadcast [ pos="6,-15!" shape="point" width="0" ]
+  conductor__loop_end [ pos="6,-16!" shape="point" width="0" ];
+  conductor__ret_loop_end [ pos="6.5,-16!" shape="point" width="0" ];
+  conductor__foot [ label="Conductor" pos="6,-17!" shape="record" ];
+  to_clients_buffer__head [ label="To Clients Buffer (CNC File)" pos="9,0!" shape="record" ];
+  to_clients_buffer__broadcast [ pos="9,-15!" shape="point" width="0" ]
+  to_clients_buffer__foot [ label="To Clients Buffer (CNC File)" pos="9,-17!" shape="record" ];
+  send_channel_endpoint__head [ label="Send Channel Endpoint" pos="12,0!" shape="record" ];
+  send_channel_endpoint__get_add [ pos="12,-4!" shape="point" width="0" ]
+  send_channel_endpoint__ret_get_add [ pos="12,-5!" shape="point" width="0" ]
+  send_channel_endpoint__add_pub [ pos="12,-13!" shape="point" width="0" ]
+  send_channel_endpoint__ret_add_pub [ pos="12,-14!" shape="point" width="0" ]
+  send_channel_endpoint__foot [ label="Send Channel Endpoint" pos="12,-17!" shape="record" ];
+  network_publication__head [ label="Network Publication" pos="15,0!" shape="record" ];
+  network_publication__create [ pos="15,-6!" shape="point" width="0" ]
+  network_publication__mmap [ pos="15,-7!" shape="point" width="0" ]
+  network_publication__ret_mmap [ pos="15,-8!" shape="point" width="0" ]
+  network_publication__on_add [ pos="15,-9!" shape="point" width="0" ]
+  network_publication__ret_on_add [ pos="15,-11!" shape="point" width="0" ]
+  network_publication__ret_create [ pos="15,-12!" shape="point" width="0" ]
+  network_publication__foot [ label="Network Publication" pos="15,-17!" shape="record" ];
+  publication_log__head [ label="Publication Log File" pos="18,0!" shape="record" ];
+  publication_log__mmap [ pos="18,-7!" shape="point" width="0" ]
+  publication_log__ret_mmap [ pos="18,-8!" shape="point" width="0" ]
+  publication_log__foot [ label="Publication Log File" pos="18,-17!" shape="record" ];
+  sender_proxy__head [ label="Sender Proxy" pos="21,0!" shape="record" ];
+  sender_proxy__on_add [ pos="21,-9!" shape="point" width="0" ]
+  sender_proxy__offer [ pos="21,-10!" shape="point" width="0" ]
+  sender_proxy__ret_on_add [ pos="21,-11!" shape="point" width="0" ]
+  sender_proxy__foot [ label="Sender Proxy" pos="21,-17!" shape="record" ];
+  sender_command_queue__head [ label="Sender Command Queue" pos="24,0!" shape="record" ];
+  sender_command_queue__offer [ pos="24,-10!" shape="point" width="0" ]
+  sender_command_queue__drain [ pos="24,-11!" shape="point" width="0" ]
+  sender_command_queue__on_command [ pos="24,-12!" shape="point" width="0" ]
+  sender_command_queue__foot [ label="Sender Command Queue" pos="24,-17!" shape="record" ];
+  sender__head [ label="Sender" pos="27,0!" shape="record" ];
+  sender__loop_begin [ pos="27,-1!" shape="point" width="0" ];
+  sender__ret_loop_begin [ pos="27.5,-1!" shape="point" width="0" ];
+  sender__drain [ pos="27,-11!" shape="point" width="0" ]
+  sender__on_command [ pos="27,-12!" shape="point" width="0" ]
+  sender__add_pub [ pos="27,-13!" shape="point" width="0" ]
+  sender__ret_add_pub [ pos="27,-14!" shape="point" width="0" ]
+  sender__loop_end [ pos="27,-16!" shape="point" width="0" ];
+  sender__ret_loop_end [ pos="27.5,-16!" shape="point" width="0" ];
+  sender__foot [ label="Sender" pos="27,-17!" shape="record" ];
 
   client__head -> client__foot [ dir="none" style="bold" ]
   to_driver_ringbuf__head -> to_driver_ringbuf__foot [ dir="none" style="bold" ]
@@ -69,6 +73,7 @@ digraph add_publication_sequence_diagram {
   conductor__create -> conductor__ret_create [ dir="none" style="dashed" ]
   conductor__ret_create -> conductor__loop_end [ dir="none" style="bold" ]
   conductor__loop_end -> conductor__foot [ dir="none" style="dashed" ]
+  to_clients_buffer__head -> to_clients_buffer__foot [ dir="none" style="bold" ]
   send_channel_endpoint__head -> send_channel_endpoint__get_add [ dir="none" style="dashed" ]
   send_channel_endpoint__get_add -> send_channel_endpoint__foot [ dir="none" style="bold" ]
   network_publication__head -> network_publication__create [ dir="none" style="dashed" ]
@@ -104,6 +109,7 @@ digraph add_publication_sequence_diagram {
   sender_proxy__offer -> sender_command_queue__offer [ headlabel="offer( \n sender_on_add_publication, \n network_publication)" style="solid" ]
   sender_proxy__ret_on_add -> network_publication__ret_on_add [ label="return" style="dashed" ]
   network_publication__ret_create -> conductor__ret_create [ label="return" style="dashed" ]
+  conductor__broadcast -> to_clients_buffer__broadcast [ headlabel="broadcast(publication_buffers_ready)" style="solid" ]
   sender__drain -> sender_command_queue__drain [ taillabel="drain(sender_on_command)" style="solid" ]
   sender_command_queue__on_command -> sender__on_command [ headlabel="sender_on_command( \n sender_on_add_publication, \n network_publiation)" style="solid" ]
   sender__add_pub -> send_channel_endpoint__add_pub [ label="add_publication(network_publication)" style="solid" ]
