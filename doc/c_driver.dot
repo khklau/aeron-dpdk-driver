@@ -75,7 +75,6 @@ digraph aeron_media_driver {
 
             conductor [ label="conductor" shape="none" fontsize=24 ];
 
-            clients [ label="clients" shape="box3d" ];
             conductor_proxy [ label="conductor_proxy" shape="record" ];
             counters_manager [ label="counters_manager" shape="record" ];
             error_log [ label="error_log" shape="record" ];
@@ -150,7 +149,7 @@ digraph aeron_media_driver {
 
                     ipc_publications [ label="ipc_publications" shape="none" fontsize=20 ];
 
-                    ip_mapped_raw_log [ label="mapped_raw_log" shape="doubleoctagon" ];
+                    ip_mapped_log_file [ label="mapped_log_file" shape="doubleoctagon" ];
                 }
 
                 subgraph cluster_network_publications {
@@ -159,7 +158,8 @@ digraph aeron_media_driver {
 
                     network_publications [ label="network_publications" shape="none" fontsize=20 ];
 
-                    np_mapped_raw_log [ label="mapped_raw_log" shape="doubleoctagon" ];
+                    np_mapped_log_file [ label="mapped_log_file" shape="doubleoctagon" ];
+                    retransmit_handler [ label="retransmit_handler" shape="record" ];
                 }
 
                 subgraph cluster_publication_images {
@@ -169,9 +169,9 @@ digraph aeron_media_driver {
                     publication_images [ label="publication_images" shape="none" fontsize=20 ];
 
                     loss_detector [ label="loss_detector" shape="record" ];
-                    pi_mapped_raw_log [ label="mapped_raw_log" shape="doubleoctagon" ];
+                    pi_mapped_log_file [ label="mapped_log_file" shape="doubleoctagon" ];
 
-                    loss_detector -> pi_mapped_raw_log;
+                    loss_detector -> pi_mapped_log_file;
                 }
             }
 
