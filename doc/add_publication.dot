@@ -109,7 +109,7 @@ digraph add_publication_sequence_diagram {
   sender_proxy__offer -> sender_command_queue__offer [ headlabel="offer( \n sender_on_add_publication, \n network_publication)" style="solid" ]
   sender_proxy__ret_on_add -> network_publication__ret_on_add [ label="return" style="dashed" ]
   network_publication__ret_create -> conductor__ret_create [ label="return" style="dashed" ]
-  conductor__broadcast -> to_clients_buffer__broadcast [ headlabel="broadcast(publication_buffers_ready)" style="solid" ]
+  conductor__broadcast -> to_clients_buffer__broadcast [ headlabel="broadcast( \n RESPONSE_ON_PUBLICATION_READY, \n publication_buffers_ready)" style="solid" ]
   sender__drain -> sender_command_queue__drain [ taillabel="drain(sender_on_command)" style="solid" ]
   sender_command_queue__on_command -> sender__on_command [ headlabel="sender_on_command( \n sender_on_add_publication, \n network_publiation)" style="solid" ]
   sender__add_pub -> send_channel_endpoint__add_pub [ label="add_publication(network_publication)" style="solid" ]
