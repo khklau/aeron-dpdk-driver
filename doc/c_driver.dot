@@ -223,6 +223,7 @@ digraph aeron_media_driver {
         agent_runners -> receiver_idle_strategy [ ltail=cluster_agent_runners ];
         agent_runners -> sender [ ltail=cluster_agent_runners, lhead=cluster_sender ];
         agent_runners -> sender_idle_strategy [ ltail=cluster_agent_runners ];
+        data_packet_dispatcher -> receiver_proxy;
         receiver_udp_transport_poller -> receive_udp_channel_transport;
         sender_udp_transport_poller -> send_udp_channel_transport;
     }
