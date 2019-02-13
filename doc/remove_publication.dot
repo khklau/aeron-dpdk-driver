@@ -1,4 +1,4 @@
-digraph add_publication_sequence_diagram {
+digraph remove_publication_sequence_diagram {
   client__head [ label="Client" pos="0,0!" shape="record" ];
   client__write [ pos="0,-1!" shape="point" width="0" ]
   client__foot [ label="Client" pos="0,-8!" shape="record" ];
