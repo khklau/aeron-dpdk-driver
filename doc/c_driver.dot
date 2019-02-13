@@ -254,6 +254,7 @@ digraph aeron_media_driver {
     network_publications -> multicast_flow_control;
     network_publications -> unicast_flow_control;
     publication_images -> congestion_control;
+    receive_channel_endpoints -> receiver_id;
     receiver -> context [ ltail=cluster_receiver, lhead=cluster_context ];
     receiver -> error_log [ ltail=cluster_receiver ];
     receiver -> publication_images [ ltail=cluster_receiver];
