@@ -26,8 +26,8 @@ digraph add_subscription_sequence_diagram {
   receive_channel_endpoint__head [ label="Receive Channel Endpoint" pos="12,0!" shape="record" ];
   receive_channel_endpoint__get_add [ pos="12,-4!" shape="point" width="0" ]
   receive_channel_endpoint__ret_get_add [ pos="12,-5!" shape="point" width="0" ]
-  receive_channel_endpoint__add_pub [ pos="12,-13!" shape="point" width="0" ]
-  receive_channel_endpoint__ret_add_pub [ pos="12,-14!" shape="point" width="0" ]
+  receive_channel_endpoint__send_status_msg [ pos="12,-12!" shape="point" width="0" ]
+  receive_channel_endpoint__ret_send_status_msg [ pos="12,-13!" shape="point" width="0" ]
   receive_channel_endpoint__foot [ label="Receive Channel Endpoint" pos="12,-17!" shape="record" ];
   receiver_proxy__head [ label="Receiver Proxy" pos="15,0!" shape="record" ];
   receiver_proxy__on_add_end [ pos="15,-6!" shape="point" width="0" ]
@@ -46,6 +46,8 @@ digraph add_subscription_sequence_diagram {
   receiver__on_command [ pos="21,-9!" shape="point" width="0" ]
   receiver__add_channel [ pos="21,-10!" shape="point" width="0" ]
   receiver__ret_add_channel [ pos="21,-11!" shape="point" width="0" ]
+  receiver__send_status_msg [ pos="21,-12!" shape="point" width="0" ]
+  receiver__ret_send_status_msg [ pos="21,-13!" shape="point" width="0" ]
   receiver__loop_end [ pos="21,-16!" shape="point" width="0" ];
   receiver__ret_loop_end [ pos="21.5,-16!" shape="point" width="0" ];
   receiver__foot [ label="Receiver" pos="21,-17!" shape="record" ];
@@ -77,7 +79,9 @@ digraph add_subscription_sequence_diagram {
   receiver__drain -> receiver__on_command [ dir="none" style="dashed" ]
   receiver__on_command -> receiver__add_channel [ dir="none" style="bold" ]
   receiver__add_channel -> receiver__ret_add_channel [ dir="none" style="dashed" ]
-  receiver__ret_add_channel -> receiver__loop_end [ dir="none" style="bold" ]
+  receiver__ret_add_channel -> receiver__send_status_msg [ dir="none" style="bold" ]
+  receiver__send_status_msg -> receiver__ret_send_status_msg [ dir="none" style="dashed" ]
+  receiver__ret_send_status_msg -> receiver__loop_end [ dir="none" style="bold" ]
   receiver__loop_end -> receiver__foot [ dir="none" style="dashed" ]
   udp_poller__head -> udp_poller__add_channel [ dir="none" style="dashed" ]
   udp_poller__add_channel -> udp_poller__ret_add_channel [ dir="none" style="bold" ]
@@ -95,6 +99,8 @@ digraph add_subscription_sequence_diagram {
   receiver_command_queue__on_command -> receiver__on_command [ headlabel="receiver_on_command( \n receiver_on_add_endpoint, \n receive_channel_endpoint)" style="solid" ]
   receiver__add_channel -> udp_poller__add_channel [ headlabel="add(receive_channel)" style="solid" ]
   udp_poller__ret_add_channel -> receiver__ret_add_channel [ taillabel="return" style="dashed" ]
+  receiver__send_status_msg -> receive_channel_endpoint__send_status_msg [ label="send(status_message)" style="solid" ]
+  receive_channel_endpoint__ret_send_status_msg -> receiver__ret_send_status_msg [ label="return" style="dashed" ]
 
   conductor__loop_end -> conductor__ret_loop_end [ dir="none" style="bold" ]
   conductor__ret_loop_end -> conductor__ret_loop_begin [ label="agent runner loop" dir="none" style="bold" ]
