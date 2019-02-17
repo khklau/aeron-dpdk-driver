@@ -1,12 +1,12 @@
 digraph add_subscription_sequence_diagram {
   client__head [ label="Client" pos="0,0!" shape="record" ];
   client__write [ pos="0,-1!" shape="point" width="0" ]
-  client__foot [ label="Client" pos="0,-17!" shape="record" ];
+  client__foot [ label="Client" pos="0,-19!" shape="record" ];
   to_driver_ringbuf__head [ label="To Driver Ringbuf" pos="3,0!" shape="record" ];
   to_driver_ringbuf__write [ pos="3,-1!" shape="point" width="0" ]
   to_driver_ringbuf__read [ pos="3,-2!" shape="point" width="0" ]
   to_driver_ringbuf__on_command [ pos="3,-3!" shape="point" width="0" ]
-  to_driver_ringbuf__foot [ label="To Driver Ringbuf" pos="3,-17!" shape="record" ];
+  to_driver_ringbuf__foot [ label="To Driver Ringbuf" pos="3,-19!" shape="record" ];
   conductor__head [ label="Conductor" pos="6,0!" shape="record" ];
   conductor__loop_begin [ pos="6,-1!" shape="point" width="0" ];
   conductor__ret_loop_begin [ pos="6.5,-1!" shape="point" width="0" ];
@@ -14,65 +14,74 @@ digraph add_subscription_sequence_diagram {
   conductor__on_command [ pos="6,-3!" shape="point" width="0" ]
   conductor__get_add [ pos="6,-4!" shape="point" width="0" ]
   conductor__ret_get_add [ pos="6,-5!" shape="point" width="0" ]
-  conductor__on_add_end [ pos="6,-6!" shape="point" width="0" ]
-  conductor__ret_on_add_end [ pos="6,-8!" shape="point" width="0" ]
-  conductor__broadcast [ pos="6,-15!" shape="point" width="0" ]
-  conductor__loop_end [ pos="6,-16!" shape="point" width="0" ];
-  conductor__ret_loop_end [ pos="6.5,-16!" shape="point" width="0" ];
-  conductor__foot [ label="Conductor" pos="6,-17!" shape="record" ];
+  conductor__incref [ pos="6,-6!" shape="point" width="0" ]
+  conductor__ret_incref [ pos="6,-16!" shape="point" width="0" ]
+  conductor__broadcast [ pos="6,-17!" shape="point" width="0" ]
+  conductor__loop_end [ pos="6,-18!" shape="point" width="0" ];
+  conductor__ret_loop_end [ pos="6.5,-18!" shape="point" width="0" ];
+  conductor__foot [ label="Conductor" pos="6,-19!" shape="record" ];
   to_clients_buffer__head [ label="To Clients Buffer (CNC File)" pos="9,0!" shape="record" ];
-  to_clients_buffer__broadcast [ pos="9,-15!" shape="point" width="0" ]
-  to_clients_buffer__foot [ label="To Clients Buffer (CNC File)" pos="9,-17!" shape="record" ];
+  to_clients_buffer__broadcast [ pos="9,-17!" shape="point" width="0" ]
+  to_clients_buffer__foot [ label="To Clients Buffer (CNC File)" pos="9,-19!" shape="record" ];
   receive_channel_endpoint__head [ label="Receive Channel Endpoint" pos="12,0!" shape="record" ];
   receive_channel_endpoint__get_add [ pos="12,-4!" shape="point" width="0" ]
   receive_channel_endpoint__ret_get_add [ pos="12,-5!" shape="point" width="0" ]
-  receive_channel_endpoint__send_status_msg [ pos="12,-12!" shape="point" width="0" ]
-  receive_channel_endpoint__ret_send_status_msg [ pos="12,-13!" shape="point" width="0" ]
-  receive_channel_endpoint__foot [ label="Receive Channel Endpoint" pos="12,-17!" shape="record" ];
+  receive_channel_endpoint__incref [ pos="12,-6!" shape="point" width="0" ]
+  receive_channel_endpoint__on_add_end [ pos="12,-7!" shape="point" width="0" ]
+  receive_channel_endpoint__ret_on_add_end [ pos="12,-9!" shape="point" width="0" ]
+  receive_channel_endpoint__on_add_sub [ pos="12,-10!" shape="point" width="0" ]
+  receive_channel_endpoint__ret_on_add_sub [ pos="12,-12!" shape="point" width="0" ]
+  receive_channel_endpoint__send_status_msg [ pos="12,-16!" shape="point" width="0" ]
+  receive_channel_endpoint__ret_send_status_msg [ pos="12,-17!" shape="point" width="0" ]
+  receive_channel_endpoint__foot [ label="Receive Channel Endpoint" pos="12,-19!" shape="record" ];
   receiver_proxy__head [ label="Receiver Proxy" pos="15,0!" shape="record" ];
-  receiver_proxy__on_add_end [ pos="15,-6!" shape="point" width="0" ]
-  receiver_proxy__offer [ pos="15,-7!" shape="point" width="0" ]
-  receiver_proxy__ret_on_add_end [ pos="15,-8!" shape="point" width="0" ]
-  receiver_proxy__foot [ label="Receiver Proxy" pos="15,-17!" shape="record" ];
+  receiver_proxy__on_add_end [ pos="15,-7!" shape="point" width="0" ];
+  receiver_proxy__ofer_add_end [ pos="15,-8!" shape="point" width="0" ];
+  receiver_proxy__ret_on_add_end [ pos="15,-9!" shape="point" width="0" ];
+  receiver_proxy__on_add_sub [ pos="15,-10!" shape="point" width="0" ];
+  receiver_proxy__ofer_add_sub [ pos="15,-11!" shape="point" width="0" ];
+  receiver_proxy__ret_on_add_sub [ pos="15,-12!" shape="point" width="0" ]
+  receiver_proxy__foot [ label="Receiver Proxy" pos="15,-19!" shape="record" ];
   receiver_command_queue__head [ label="Receiver Command Queue" pos="18,0!" shape="record" ];
-  receiver_command_queue__offer [ pos="18,-7!" shape="point" width="0" ]
-  receiver_command_queue__drain [ pos="18,-8!" shape="point" width="0" ]
-  receiver_command_queue__on_command [ pos="18,-9!" shape="point" width="0" ]
-  receiver_command_queue__foot [ label="Receiver Command Queue" pos="18,-17!" shape="record" ];
+  receiver_command_queue__offer_end [ pos="18,-8!" shape="point" width="0" ]
+  receiver_command_queue__offer_sub [ pos="18,-11!" shape="point" width="0" ]
+  receiver_command_queue__drain [ pos="18,-12!" shape="point" width="0" ]
+  receiver_command_queue__on_command [ pos="18,-13!" shape="point" width="0" ]
+  receiver_command_queue__foot [ label="Receiver Command Queue" pos="18,-19!" shape="record" ];
   receiver__head [ label="Receiver" pos="21,0!" shape="record" ];
   receiver__loop_begin [ pos="21,-1!" shape="point" width="0" ];
   receiver__ret_loop_begin [ pos="21.5,-1!" shape="point" width="0" ];
-  receiver__drain [ pos="21,-8!" shape="point" width="0" ]
-  receiver__on_command [ pos="21,-9!" shape="point" width="0" ]
-  receiver__add_channel [ pos="21,-10!" shape="point" width="0" ]
-  receiver__ret_add_channel [ pos="21,-11!" shape="point" width="0" ]
-  receiver__send_status_msg [ pos="21,-12!" shape="point" width="0" ]
-  receiver__ret_send_status_msg [ pos="21,-13!" shape="point" width="0" ]
-  receiver__loop_end [ pos="21,-16!" shape="point" width="0" ];
-  receiver__ret_loop_end [ pos="21.5,-16!" shape="point" width="0" ];
-  receiver__foot [ label="Receiver" pos="21,-17!" shape="record" ];
+  receiver__drain [ pos="21,-12!" shape="point" width="0" ]
+  receiver__on_command [ pos="21,-13!" shape="point" width="0" ]
+  receiver__add_channel [ pos="21,-14!" shape="point" width="0" ]
+  receiver__ret_add_channel [ pos="21,-15!" shape="point" width="0" ]
+  receiver__send_status_msg [ pos="21,-16!" shape="point" width="0" ]
+  receiver__ret_send_status_msg [ pos="21,-17!" shape="point" width="0" ]
+  receiver__loop_end [ pos="21,-18!" shape="point" width="0" ];
+  receiver__ret_loop_end [ pos="21.5,-18!" shape="point" width="0" ];
+  receiver__foot [ label="Receiver" pos="21,-19!" shape="record" ];
   udp_poller__head [ label="UDP Transport Poller" pos="24,0!" shape="record" ];
-  udp_poller__add_channel [ pos="24,-10!" shape="point" width="0" ]
-  udp_poller__ret_add_channel [ pos="24,-11!" shape="point" width="0" ]
-  udp_poller__foot [ label="UDP Transport Poller" pos="24,-17!" shape="record" ];
+  udp_poller__add_channel [ pos="24,-14!" shape="point" width="0" ]
+  udp_poller__ret_add_channel [ pos="24,-15!" shape="point" width="0" ]
+  udp_poller__foot [ label="UDP Transport Poller" pos="24,-19!" shape="record" ];
 
   client__head -> client__foot [ dir="none" style="bold" ]
   to_driver_ringbuf__head -> to_driver_ringbuf__foot [ dir="none" style="bold" ]
   conductor__head -> conductor__loop_begin [ dir="none" style="dashed" ]
   conductor__loop_begin -> conductor__read [ dir="none" style="bold" ]
   conductor__read -> conductor__on_command [ dir="none" style="dashed" ]
-  conductor__on_command -> conductor__get_add [ dir="none" style="bold" ]
-  conductor__get_add -> conductor__ret_get_add [ dir="none" style="dashed" ]
-  conductor__ret_get_add -> conductor__on_add_end [ dir="none" style="bold" ]
-  conductor__on_add_end -> conductor__ret_on_add_end [ dir="none" style="dashed" ]
-  conductor__ret_on_add_end -> conductor__loop_end [ dir="none" style="bold" ]
+  conductor__on_command -> conductor__incref [ dir="none" style="bold" ]
+  conductor__incref -> conductor__ret_incref [ dir="none" style="dashed" ]
+  conductor__ret_incref -> conductor__loop_end [ dir="none" style="bold" ]
   conductor__loop_end -> conductor__foot [ dir="none" style="dashed" ]
   to_clients_buffer__head -> to_clients_buffer__foot [ dir="none" style="bold" ]
   receive_channel_endpoint__head -> receive_channel_endpoint__get_add [ dir="none" style="dashed" ]
   receive_channel_endpoint__get_add -> receive_channel_endpoint__foot [ dir="none" style="bold" ]
   receiver_proxy__head -> receiver_proxy__on_add_end [ dir="none" style="dashed" ]
   receiver_proxy__on_add_end -> receiver_proxy__ret_on_add_end [ dir="none" style="bold" ]
-  receiver_proxy__ret_on_add_end -> receiver_proxy__foot [ dir="none" style="dashed" ]
+  receiver_proxy__ret_on_add_end -> receiver_proxy__on_add_sub [ dir="none" style="dashed" ]
+  receiver_proxy__on_add_sub -> receiver_proxy__ret_on_add_sub [ dir="none" style="bold" ]
+  receiver_proxy__ret_on_add_sub -> receiver_proxy__foot [ dir="none" style="dashed" ]
   receiver_command_queue__head -> receiver_command_queue__foot [ dir="none" style="bold" ]
   receiver__head -> receiver__loop_begin [ dir="none" style="dashed" ]
   receiver__loop_begin -> receiver__drain [ dir="none" style="bold" ]
@@ -87,14 +96,18 @@ digraph add_subscription_sequence_diagram {
   udp_poller__add_channel -> udp_poller__ret_add_channel [ dir="none" style="bold" ]
   udp_poller__ret_add_channel -> udp_poller__foot [ dir="none" style="dashed" ]
 
-  client__write -> to_driver_ringbuf__write [ headlabel="write( \n ADD_SUBSCRIPTION, \n subscription_command)" style="solid" ]
+  client__write -> to_driver_ringbuf__write [ headlabel="write( \n ADD_SUBSCRIPTION, \n channel_uri, \n stream_id)" style="solid" ]
   conductor__read -> to_driver_ringbuf__read [ taillabel="read(conductor_on_command)" style="solid" ]
-  to_driver_ringbuf__on_command -> conductor__on_command [ headlabel="conductor_on_command( \n ADD_SUBSCRIPTION, \n subscription_command)" style="solid" ]
-  conductor__get_add -> receive_channel_endpoint__get_add [ headlabel="get_or_add(subscription_uri)" style="solid" ]
+  to_driver_ringbuf__on_command -> conductor__on_command [ headlabel="conductor_on_command( \n ADD_SUBSCRIPTION, \n channel_uri, \n stream_id)" style="solid" ]
+  conductor__get_add -> receive_channel_endpoint__get_add [ headlabel="get_or_add(channel_uri)" style="solid" ]
   receive_channel_endpoint__ret_get_add -> conductor__ret_get_add [ label="return" style="dashed" ]
-  conductor__on_add_end -> receiver_proxy__on_add_end [ headlabel="on_add_endpoint(receive_channel_endpoint)" style="solid" ]
-  receiver_proxy__offer -> receiver_command_queue__offer [ headlabel="offer( \n receiver_on_add_endpoint, \n receive_channel_endpoint)" style="solid" ]
-  receiver_proxy__ret_on_add_end -> conductor__ret_on_add_end [ label="return" style="dashed" ]
+  conductor__incref -> receive_channel_endpoint__incref [ headlabel="incref_to_stream(stream_id)" style="solid" ]
+  receive_channel_endpoint__on_add_end -> receiver_proxy__on_add_end [ headlabel="on_add_endpoint(receive_channel_endpoint)" style="solid" ]
+  receiver_proxy__ofer_add_end -> receiver_command_queue__offer_end [ headlabel="offer( \n receiver_on_add_endpoint, \n receive_channel_endpoint)" style="solid" ]
+  receiver_proxy__ret_on_add_end -> receive_channel_endpoint__ret_on_add_end [ label="return" style="dashed" ]
+  receive_channel_endpoint__on_add_sub -> receiver_proxy__on_add_sub [ headlabel="on_add_subscription( \n receive_channel_endpoint, \n stream_id)" style="solid" ]
+  receiver_proxy__ofer_add_sub -> receiver_command_queue__offer_sub [ headlabel="offer( \n receiver_on_add_subscription, \n receive_channel_endpoint, \n stream_id)" style="solid" ]
+  receiver_proxy__ret_on_add_sub -> receive_channel_endpoint__ret_on_add_sub [ label="return" style="dashed" ]
   receiver__drain -> receiver_command_queue__drain [ taillabel="drain(receiver_on_command)" style="solid" ]
   receiver_command_queue__on_command -> receiver__on_command [ headlabel="receiver_on_command( \n receiver_on_add_endpoint, \n receive_channel_endpoint)" style="solid" ]
   receiver__add_channel -> udp_poller__add_channel [ headlabel="add(receive_channel)" style="solid" ]
