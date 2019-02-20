@@ -1,12 +1,12 @@
 digraph remove_publication_sequence_diagram {
   client__head [ label="Client" pos="0,0!" shape="record" ];
   client__write [ pos="0,-1!" shape="point" width="0" ]
-  client__foot [ label="Client" pos="0,-8!" shape="record" ];
-  to_driver_ringbuf__head [ label="To Driver Ringbuf" pos="3,0!" shape="record" ];
+  client__foot [ label="Client" pos="0,-10!" shape="record" ];
+  to_driver_ringbuf__head [ label="To Driver Ringbuf (CNC File)" pos="3,0!" shape="record" ];
   to_driver_ringbuf__write [ pos="3,-1!" shape="point" width="0" ]
   to_driver_ringbuf__read [ pos="3,-4!" shape="point" width="0" ]
   to_driver_ringbuf__on_command [ pos="3,-5!" shape="point" width="0" ]
-  to_driver_ringbuf__foot [ label="To Driver Ringbuf" pos="3,-8!" shape="record" ];
+  to_driver_ringbuf__foot [ label="To Driver Ringbuf (CNC File)" pos="3,-10!" shape="record" ];
   conductor__head [ label="Conductor" pos="6,0!" shape="record" ];
   conductor__loop_begin [ pos="6,-1!" shape="point" width="0" ];
   conductor__ret_loop_begin [ pos="6.5,-1!" shape="point" width="0" ];
@@ -16,13 +16,19 @@ digraph remove_publication_sequence_diagram {
   conductor__ret_on_check [ pos="6,-3!" shape="point" width="0" ];
   conductor__read [ pos="6,-4!" shape="point" width="0" ]
   conductor__on_command [ pos="6,-5!" shape="point" width="0" ]
-  conductor__broadcast [ pos="6,-6!" shape="point" width="0" ]
-  conductor__loop_end [ pos="6,-7!" shape="point" width="0" ];
-  conductor__ret_loop_end [ pos="6.5,-7!" shape="point" width="0" ];
-  conductor__foot [ label="Conductor" pos="6,-8!" shape="record" ];
+  conductor__remove [ pos="6,-6!" shape="point" width="0" ]
+  conductor__ret_remove [ pos="6,-7!" shape="point" width="0" ]
+  conductor__broadcast [ pos="6,-8!" shape="point" width="0" ]
+  conductor__loop_end [ pos="6,-9!" shape="point" width="0" ];
+  conductor__ret_loop_end [ pos="6.5,-9!" shape="point" width="0" ];
+  conductor__foot [ label="Conductor" pos="6,-10!" shape="record" ];
   to_clients_buffer__head [ label="To Clients Buffer (CNC File)" pos="9,0!" shape="record" ];
-  to_clients_buffer__broadcast [ pos="9,-6!" shape="point" width="0" ]
-  to_clients_buffer__foot [ label="To Clients Buffer (CNC File)" pos="9,-8!" shape="record" ];
+  to_clients_buffer__broadcast [ pos="9,-8!" shape="point" width="0" ]
+  to_clients_buffer__foot [ label="To Clients Buffer (CNC File)" pos="9,-10!" shape="record" ];
+  publication_link__head [ label="Publication Link" pos="12,0!" shape="record" ];
+  publication_link__remove [ pos="12,-6!" shape="point" width="0" ]
+  publication_link__ret_remove [ pos="12,-7!" shape="point" width="0" ]
+  publication_link__foot [ label="Publication Link" pos="12,-10!" shape="record" ];
 
   client__head -> client__foot [ dir="none" style="bold" ]
   to_driver_ringbuf__head -> to_driver_ringbuf__foot [ dir="none" style="bold" ]
@@ -34,13 +40,17 @@ digraph remove_publication_sequence_diagram {
   conductor__on_command -> conductor__loop_end [ dir="none" style="bold" ]
   conductor__loop_end -> conductor__foot [ dir="none" style="dashed" ]
   to_clients_buffer__head -> to_clients_buffer__foot [ dir="none" style="bold" ]
+  publication_link__head -> publication_link__ret_remove [ dir="none" style="bold" ]
+  publication_link__ret_remove -> publication_link__foot [ dir="none" style="dashed" ]
 
+  client__write -> to_driver_ringbuf__write [ headlabel="write( \n REMOVE_PUBLICATION, \n client_id, \n publication_id)" style="solid" ]
   conductor__on_check -> conductor__begin_on_check [ taillabel="on_check_managed_resources" dir="none" style="solid" ]
   conductor__begin_on_check -> conductor__end_on_check [ dir="none" style="solid" ]
   conductor__end_on_check -> conductor__ret_on_check [ style="solid" ]
-  client__write -> to_driver_ringbuf__write [ headlabel="write( \n REMOVE_PUBLICATION, \n publication_command)" style="solid" ]
   conductor__read -> to_driver_ringbuf__read [ taillabel="read(conductor_on_command)" style="solid" ]
-  to_driver_ringbuf__on_command -> conductor__on_command [ headlabel="conductor_on_command( \n REMOVE_PUBLICATION, \n publication_command)" style="solid" ]
+  to_driver_ringbuf__on_command -> conductor__on_command [ headlabel="conductor_on_command( \n REMOVE_PUBLICATION, \n client_id, \n publication_id)" style="solid" ]
+  conductor__remove -> publication_link__remove [ headlabel="remove( \n client_id, \n publication_id)" style="solid" ]
+  publication_link__ret_remove -> conductor__ret_remove [ label="return" style="dashed" ]
   conductor__broadcast -> to_clients_buffer__broadcast [ headlabel="broadcast( \n RESPONSE_ON_OPERATION_SUCCESS, \n operation_success)" style="solid" ]
   conductor__loop_end -> conductor__ret_loop_end [ dir="none" style="bold" ]
   conductor__ret_loop_end -> conductor__ret_loop_begin [ label="agent runner loop" dir="none" style="bold" ]

@@ -2,11 +2,11 @@ digraph add_publication_sequence_diagram {
   client__head [ label="Client" pos="0,0!" shape="record" ];
   client__write [ pos="0,-1!" shape="point" width="0" ]
   client__foot [ label="Client" pos="0,-17!" shape="record" ];
-  to_driver_ringbuf__head [ label="To Driver Ringbuf" pos="3,0!" shape="record" ];
+  to_driver_ringbuf__head [ label="To Driver Ringbuf (CNC File)" pos="3,0!" shape="record" ];
   to_driver_ringbuf__write [ pos="3,-1!" shape="point" width="0" ]
   to_driver_ringbuf__read [ pos="3,-2!" shape="point" width="0" ]
   to_driver_ringbuf__on_command [ pos="3,-3!" shape="point" width="0" ]
-  to_driver_ringbuf__foot [ label="To Driver Ringbuf" pos="3,-17!" shape="record" ];
+  to_driver_ringbuf__foot [ label="To Driver Ringbuf (CNC File)" pos="3,-17!" shape="record" ];
   conductor__head [ label="Conductor" pos="6,0!" shape="record" ];
   conductor__loop_begin [ pos="6,-1!" shape="point" width="0" ];
   conductor__ret_loop_begin [ pos="6.5,-1!" shape="point" width="0" ];
