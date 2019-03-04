@@ -29,8 +29,8 @@ digraph remove_publication_sequence_diagram {
   conductor__ret_get2 [ pos="9,-8!" shape="point" width="0" ]
   conductor__decref2 [ pos="9,-9!" shape="point" width="0" ]
   conductor__ret_decref2 [ pos="9,-10!" shape="point" width="0" ]
-  conductor__remove [ pos="9,-11!" shape="point" width="0" ]
-  conductor__ret_remove [ pos="9,-12!" shape="point" width="0" ]
+  conductor__remove_pl2 [ pos="9,-11!" shape="point" width="0" ]
+  conductor__ret_remove_pl2 [ pos="9,-12!" shape="point" width="0" ]
   conductor__broadcast [ pos="9,-13!" shape="point" width="0" ]
   conductor__ret_on_cmd_remove [ pos="9,-14!" shape="point" width="0" ];
   conductor__ret_read [ pos="9,-15!" shape="point" width="0" ];
@@ -44,6 +44,10 @@ digraph remove_publication_sequence_diagram {
   conductor__ret_stream_decref [ pos="9,-23!" shape="point" width="0" ]
   conductor__unlink [ pos="9,-24!" shape="point" width="0" ]
   conductor__ret_unlink [ pos="9,-25!" shape="point" width="0" ]
+  conductor__remove_sl [ pos="9,-26!" shape="point" width="0" ]
+  conductor__ret_remove_sl [ pos="9,-27!" shape="point" width="0" ]
+  conductor__remove_pl1 [ pos="9,-28!" shape="point" width="0" ]
+  conductor__ret_remove_pl1 [ pos="9,-29!" shape="point" width="0" ]
   conductor__loop_end [ pos="9,-30!" shape="point" width="0" ];
   conductor__ret_loop_end [ pos="9.5,-30!" shape="point" width="0" ];
   conductor__foot [ label="Conductor" pos="9,-31!" shape="record" ];
@@ -53,14 +57,14 @@ digraph remove_publication_sequence_diagram {
   publication_link1__head [ label="Publication Link (Client 1)" pos="15,0!" shape="record" ];
   publication_link1__get1 [ pos="15,-16!" shape="point" width="0" ]
   publication_link1__ret_get1 [ pos="15,-17!" shape="point" width="0" ]
-  publication_link1__remove [ pos="15,-23!" shape="point" width="0" ]
-  publication_link1__ret_remove [ pos="15,-30!" shape="point" width="0" ]
+  publication_link1__remove_pl1 [ pos="15,-28!" shape="point" width="0" ]
+  publication_link1__ret_remove_pl1 [ pos="15,-29!" shape="point" width="0" ]
   publication_link1__foot [ label="Publication Link (Client 1)" pos="15,-31!" shape="record" ];
   publication_link2__head [ label="Publication Link (Client 2)" pos="18,0!" shape="record" ];
   publication_link2__get2 [ pos="18,-7!" shape="point" width="0" ]
   publication_link2__ret_get2 [ pos="18,-8!" shape="point" width="0" ]
-  publication_link2__remove [ pos="18,-11!" shape="point" width="0" ]
-  publication_link2__ret_remove [ pos="18,-12!" shape="point" width="0" ]
+  publication_link2__remove_pl2 [ pos="18,-11!" shape="point" width="0" ]
+  publication_link2__ret_remove_pl2 [ pos="18,-12!" shape="point" width="0" ]
   publication_link2__foot [ label="Publication Link (Client 2)" pos="18,-31!" shape="record" ];
   net_publication__head [ label="Network Publication" pos="21,0!" shape="record" ];
   net_publication__decref2 [ pos="21,-9!" shape="point" width="0" ]
@@ -75,8 +79,8 @@ digraph remove_publication_sequence_diagram {
   subscription_link__ret_get_end [ pos="24,-21!" shape="point" width="0" ]
   subscription_link__unlink [ pos="24,-24!" shape="point" width="0" ]
   subscription_link__ret_unlink [ pos="24,-25!" shape="point" width="0" ]
-  subscription_link__remove [ pos="24,-29!" shape="point" width="0" ]
-  subscription_link__ret_remove [ pos="24,-30!" shape="point" width="0" ]
+  subscription_link__remove_sl [ pos="24,-26!" shape="point" width="0" ]
+  subscription_link__ret_remove_sl [ pos="24,-27!" shape="point" width="0" ]
   subscription_link__foot [ label="Subscription Link (Client 1)" pos="24,-31!" shape="record" ];
   receive_channel_end__head [ label="Receive Channel Endpoint" pos="27,0!" shape="record" ];
   receive_channel_end__stream_decref [ pos="27,-22!" shape="point" width="0" ]
@@ -96,9 +100,9 @@ digraph remove_publication_sequence_diagram {
   conductor__ret_on_cmd_close -> conductor__on_cmd_remove [ dir="none" style="dashed" ]
   conductor__on_cmd_remove -> conductor__decref2 [ dir="none" style="bold" ]
   conductor__decref2 -> conductor__ret_decref2 [ dir="none" style="dashed" ]
-  conductor__ret_decref2 -> conductor__remove [ dir="none" style="bold" ]
-  conductor__remove -> conductor__ret_remove [ dir="none" style="dashed" ]
-  conductor__ret_remove -> conductor__ret_on_cmd_remove [ dir="none" style="bold" ]
+  conductor__ret_decref2 -> conductor__remove_pl2 [ dir="none" style="bold" ]
+  conductor__remove_pl2 -> conductor__ret_remove_pl2 [ dir="none" style="dashed" ]
+  conductor__ret_remove_pl2 -> conductor__ret_on_cmd_remove [ dir="none" style="bold" ]
   conductor__ret_on_cmd_remove -> conductor__ret_read [ dir="none" style="dashed" ]
   conductor__ret_read -> conductor__decref1 [ dir="none" style="bold" ]
   conductor__decref1 -> conductor__ret_decref1 [ dir="none" style="dashed" ]
@@ -111,14 +115,14 @@ digraph remove_publication_sequence_diagram {
   conductor__ret_unlink -> conductor__loop_end [ dir="none" style="bold" ]
   conductor__loop_end -> conductor__foot [ dir="none" style="dashed" ]
   to_clients_buffer__head -> to_clients_buffer__foot [ dir="none" style="bold" ]
-  publication_link1__head -> publication_link1__ret_remove [ dir="none" style="bold" ]
-  publication_link1__ret_remove -> publication_link1__foot [ dir="none" style="dashed" ]
-  publication_link2__head -> publication_link2__ret_remove [ dir="none" style="bold" ]
-  publication_link2__ret_remove -> publication_link2__foot [ dir="none" style="dashed" ]
+  publication_link1__head -> publication_link1__ret_remove_pl1 [ dir="none" style="bold" ]
+  publication_link1__ret_remove_pl1 -> publication_link1__foot [ dir="none" style="dashed" ]
+  publication_link2__head -> publication_link2__ret_remove_pl2 [ dir="none" style="bold" ]
+  publication_link2__ret_remove_pl2 -> publication_link2__foot [ dir="none" style="dashed" ]
   net_publication__head -> net_publication__ret_remove [ dir="none" style="bold" ]
   net_publication__ret_remove -> net_publication__foot [ dir="none" style="dashed" ]
-  subscription_link__head -> subscription_link__ret_remove [ dir="none" style="bold" ]
-  subscription_link__ret_remove -> subscription_link__foot [ dir="none" style="dashed" ]
+  subscription_link__head -> subscription_link__ret_remove_sl [ dir="none" style="bold" ]
+  subscription_link__ret_remove_sl -> subscription_link__foot [ dir="none" style="dashed" ]
   receive_channel_end__head -> receive_channel_end__ret_remove [ dir="none" style="bold" ]
   receive_channel_end__ret_remove -> receive_channel_end__foot [ dir="none" style="dashed" ]
 
@@ -132,8 +136,8 @@ digraph remove_publication_sequence_diagram {
   publication_link2__ret_get2 -> conductor__ret_get2 [ label="return(publication)" style="dashed" ]
   conductor__decref2 -> net_publication__decref2 [ headlabel="decref(client_id)" style="solid" ]
   net_publication__ret_decref2 -> conductor__ret_decref2 [ label="return" style="dashed" ]
-  conductor__remove -> publication_link2__remove [ headlabel="remove( \n client_id, \n publication_id)" style="solid" ]
-  publication_link2__ret_remove -> conductor__ret_remove [ label="return" style="dashed" ]
+  conductor__remove_pl2 -> publication_link2__remove_pl2 [ headlabel="remove( \n client_id, \n publication_id)" style="solid" ]
+  publication_link2__ret_remove_pl2 -> conductor__ret_remove_pl2 [ label="return" style="dashed" ]
   conductor__broadcast -> to_clients_buffer__broadcast [ headlabel="broadcast( \n RESPONSE_ON_OPERATION_SUCCESS, \n operation_success)" style="solid" ]
   conductor__ret_on_cmd_remove -> to_driver_ringbuf__ret_on_cmd_remove [ label="return" style="dashed" ]
   to_driver_ringbuf__ret_read -> conductor__ret_read [ headlabel="return; on_check_managed_resources()" style="dashed" ]
@@ -147,7 +151,11 @@ digraph remove_publication_sequence_diagram {
   receive_channel_end__ret_stream_decref -> conductor__ret_stream_decref [ label="return" style="dashed" ]
   conductor__unlink -> subscription_link__unlink [ headlabel="unlink_all_subscribable(client_id)" style="solid" ]
   subscription_link__ret_unlink -> conductor__ret_unlink [ label="return" style="dashed" ]
+  conductor__remove_sl -> subscription_link__remove_sl [ headlabel="remove(client_id)" style="solid" ]
+  subscription_link__ret_remove_sl -> conductor__ret_remove_sl [ label="return" style="dashed" ]
   conductor__loop_end -> conductor__ret_loop_end [ dir="none" style="bold" ]
+  conductor__remove_pl1 -> publication_link1__remove_pl1 [ headlabel="remove( \n client_id, \n publication_id)" style="solid" ]
+  publication_link1__ret_remove_pl1 -> conductor__ret_remove_pl1 [ label="return" style="dashed" ]
   conductor__ret_loop_end -> conductor__ret_loop_begin [ label="agent runner loop" dir="none" style="bold" ]
   conductor__ret_loop_begin -> conductor__loop_begin [ style="bold" ]
 }
