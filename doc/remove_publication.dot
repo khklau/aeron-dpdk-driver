@@ -4,10 +4,10 @@ digraph remove_publication_sequence_diagram {
   client1__head [ label="Client 1" pos="0,0!" shape="record" ];
   client1__write_close [ pos="0,-1!" shape="point" width="0" ]
   client1__destroy [ pos="0,-2!" shape="point" width="0" ]
-  client1__foot [ label="Client 1" pos="0,-35!" shape="record" ];
+  client1__foot [ label="Client 1" pos="0,-39!" shape="record" ];
   client2__head [ label="Client 2" pos="3,0!" shape="record" ];
   client2__write_remove [ pos="3,-2!" shape="point" width="0" ]
-  client2__foot [ label="Client 2" pos="3,-35!" shape="record" ];
+  client2__foot [ label="Client 2" pos="3,-39!" shape="record" ];
   to_driver_ringbuf__head [ label="To Driver Ringbuf (CNC File)" pos="6,0!" shape="record" ];
   on_driver_ringbuf__write_close [ pos="6,-1!" shape="point" width="0" ]
   on_driver_ringbuf__write_remove [ pos="6,-2!" shape="point" width="0" ]
@@ -17,7 +17,7 @@ digraph remove_publication_sequence_diagram {
   to_driver_ringbuf__on_cmd_remove [ pos="6,-6!" shape="point" width="0" ]
   to_driver_ringbuf__ret_on_cmd_remove [ pos="6,-14!" shape="point" width="0" ]
   to_driver_ringbuf__ret_read [ pos="6,-15!" shape="point" width="0" ]
-  to_driver_ringbuf__foot [ label="To Driver Ringbuf (CNC File)" pos="6,-35!" shape="record" ];
+  to_driver_ringbuf__foot [ label="To Driver Ringbuf (CNC File)" pos="6,-39!" shape="record" ];
   conductor__head [ label="Conductor" pos="9,0!" shape="record" ];
   conductor__loop_begin [ pos="9,-1!" shape="point" width="0" ];
   conductor__ret_loop_begin [ pos="9.5,-1!" shape="point" width="0" ];
@@ -52,24 +52,28 @@ digraph remove_publication_sequence_diagram {
   conductor__ret_unmap [ pos="9,-31!" shape="point" width="0" ]
   conductor__destroy [ pos="9,-32!" shape="point" width="0" ]
   conductor__ret_destroy [ pos="9,-33!" shape="point" width="0" ]
-  conductor__loop_end [ pos="9,-34!" shape="point" width="0" ];
-  conductor__ret_loop_end [ pos="9.5,-34!" shape="point" width="0" ];
-  conductor__foot [ label="Conductor" pos="9,-35!" shape="record" ];
+  conductor__decref_end [ pos="9,-34!" shape="point" width="0" ]
+  conductor__ret_decref_end [ pos="9,-35!" shape="point" width="0" ]
+  conductor__remove_end [ pos="9,-36!" shape="point" width="0" ]
+  conductor__ret_remove_end [ pos="9,-37!" shape="point" width="0" ]
+  conductor__loop_end [ pos="9,-38!" shape="point" width="0" ];
+  conductor__ret_loop_end [ pos="9.5,-38!" shape="point" width="0" ];
+  conductor__foot [ label="Conductor" pos="9,-39!" shape="record" ];
   to_clients_buffer__head [ label="To Clients Buffer (CNC File)" pos="12,0!" shape="record" ];
   to_clients_buffer__broadcast [ pos="12,-13!" shape="point" width="0" ]
-  to_clients_buffer__foot [ label="To Clients Buffer (CNC File)" pos="12,-35!" shape="record" ];
+  to_clients_buffer__foot [ label="To Clients Buffer (CNC File)" pos="12,-39!" shape="record" ];
   publication_link1__head [ label="Publication Link (Client 1)" pos="15,0!" shape="record" ];
   publication_link1__get1 [ pos="15,-16!" shape="point" width="0" ]
   publication_link1__ret_get1 [ pos="15,-17!" shape="point" width="0" ]
   publication_link1__remove_pl1 [ pos="15,-28!" shape="point" width="0" ]
   publication_link1__ret_remove_pl1 [ pos="15,-29!" shape="point" width="0" ]
-  publication_link1__foot [ label="Publication Link (Client 1)" pos="15,-35!" shape="record" ];
+  publication_link1__foot [ label="Publication Link (Client 1)" pos="15,-39!" shape="record" ];
   publication_link2__head [ label="Publication Link (Client 2)" pos="18,0!" shape="record" ];
   publication_link2__get2 [ pos="18,-7!" shape="point" width="0" ]
   publication_link2__ret_get2 [ pos="18,-8!" shape="point" width="0" ]
   publication_link2__remove_pl2 [ pos="18,-11!" shape="point" width="0" ]
   publication_link2__ret_remove_pl2 [ pos="18,-12!" shape="point" width="0" ]
-  publication_link2__foot [ label="Publication Link (Client 2)" pos="18,-35!" shape="record" ];
+  publication_link2__foot [ label="Publication Link (Client 2)" pos="18,-39!" shape="record" ];
   net_publication__head [ label="Network Publication" pos="21,0!" shape="record" ];
   net_publication__decref2 [ pos="21,-9!" shape="point" width="0" ]
   net_publication__ret_decref2 [ pos="21,-10!" shape="point" width="0" ]
@@ -77,23 +81,29 @@ digraph remove_publication_sequence_diagram {
   net_publication__ret_decref1 [ pos="21,-19!" shape="point" width="0" ]
   net_publication__destroy [ pos="21,-32!" shape="point" width="0" ]
   net_publication__ret_destroy [ pos="21,-33!" shape="point" width="0" ]
-  net_publication__foot [ label="Network Publication" pos="21,-35!" shape="record" ];
+  net_publication__foot [ label="Network Publication" pos="21,-39!" shape="record" ];
   publication_log__head [ label="Publication Log File" pos="24,0!" shape="record" ];
   publication_log__unmap [ pos="24,-30!" shape="point" width="0" ]
   publication_log__ret_unmap [ pos="24,-31!" shape="point" width="0" ]
-  publication_log__foot [ label="Publication Log File" pos="24,-35!" shape="record" ];
-  subscription_link__head [ label="Subscription Link (Client 1)" pos="27,0!" shape="record" ];
-  subscription_link__get_end [ pos="27,-20!" shape="point" width="0" ]
-  subscription_link__ret_get_end [ pos="27,-21!" shape="point" width="0" ]
-  subscription_link__unlink [ pos="27,-24!" shape="point" width="0" ]
-  subscription_link__ret_unlink [ pos="27,-25!" shape="point" width="0" ]
-  subscription_link__remove_sl [ pos="27,-26!" shape="point" width="0" ]
-  subscription_link__ret_remove_sl [ pos="27,-27!" shape="point" width="0" ]
-  subscription_link__foot [ label="Subscription Link (Client 1)" pos="27,-35!" shape="record" ];
-  receive_channel_end__head [ label="Receive Channel Endpoint" pos="30,0!" shape="record" ];
-  receive_channel_end__stream_decref [ pos="30,-22!" shape="point" width="0" ]
-  receive_channel_end__ret_stream_decref [ pos="30,-23!" shape="point" width="0" ]
-  receive_channel_end__foot [ label="Receive Channel Endpoint" pos="30,-35!" shape="record" ];
+  publication_log__foot [ label="Publication Log File" pos="24,-39!" shape="record" ];
+  send_channel_endpoint__head [ label="Send Channel Endpoint" pos="27,0!" shape="record" ];
+  send_channel_endpoint__decref_end [ pos="27,-34!" shape="point" width="0" ]
+  send_channel_endpoint__ret_decref_end [ pos="27,-35!" shape="point" width="0" ]
+  send_channel_endpoint__remove_end [ pos="27,-36!" shape="point" width="0" ]
+  send_channel_endpoint__ret_remove_end [ pos="27,-37!" shape="point" width="0" ]
+  send_channel_endpoint__foot [ label="Send Channel Endpoint" pos="27,-39!" shape="record" ];
+  subscription_link__head [ label="Subscription Link (Client 1)" pos="30,0!" shape="record" ];
+  subscription_link__get_end [ pos="30,-20!" shape="point" width="0" ]
+  subscription_link__ret_get_end [ pos="30,-21!" shape="point" width="0" ]
+  subscription_link__unlink [ pos="30,-24!" shape="point" width="0" ]
+  subscription_link__ret_unlink [ pos="30,-25!" shape="point" width="0" ]
+  subscription_link__remove_sl [ pos="30,-26!" shape="point" width="0" ]
+  subscription_link__ret_remove_sl [ pos="30,-27!" shape="point" width="0" ]
+  subscription_link__foot [ label="Subscription Link (Client 1)" pos="30,-39!" shape="record" ];
+  receive_channel_end__head [ label="Receive Channel Endpoint" pos="33,0!" shape="record" ];
+  receive_channel_end__stream_decref [ pos="33,-22!" shape="point" width="0" ]
+  receive_channel_end__ret_stream_decref [ pos="33,-23!" shape="point" width="0" ]
+  receive_channel_end__foot [ label="Receive Channel Endpoint" pos="33,-39!" shape="record" ];
 
   client1__head -> client1__destroy [ dir="none" style="bold" ]
   client1__destroy -> client1__foot [ dir="none" style="dashed" ]
@@ -126,7 +136,11 @@ digraph remove_publication_sequence_diagram {
   conductor__unmap -> conductor__ret_unmap [ dir="none" style="dashed" ]
   conductor__ret_unmap -> conductor__destroy [ dir="none" style="bold" ]
   conductor__destroy -> conductor__ret_destroy [ dir="none" style="dashed" ]
-  conductor__ret_destroy -> conductor__loop_end [ dir="none" style="bold" ]
+  conductor__ret_destroy -> conductor__decref_end [ dir="none" style="bold" ]
+  conductor__decref_end -> conductor__ret_decref_end [ dir="none" style="dashed" ]
+  conductor__ret_decref_end -> conductor__remove_end [ dir="none" style="bold" ]
+  conductor__remove_end -> conductor__ret_remove_end [ dir="none" style="dashed" ]
+  conductor__ret_remove_end -> conductor__loop_end [ dir="none" style="bold" ]
   conductor__loop_end -> conductor__foot [ dir="none" style="dashed" ]
   to_clients_buffer__head -> to_clients_buffer__foot [ dir="none" style="bold" ]
   publication_link1__head -> publication_link1__ret_remove_pl1 [ dir="none" style="bold" ]
@@ -135,6 +149,8 @@ digraph remove_publication_sequence_diagram {
   publication_link2__ret_remove_pl2 -> publication_link2__foot [ dir="none" style="dashed" ]
   net_publication__head -> net_publication__ret_destroy [ dir="none" style="bold" ]
   net_publication__ret_destroy -> net_publication__foot [ dir="none" style="dashed" ]
+  send_channel_endpoint__head -> send_channel_endpoint__ret_remove_end [ dir="none" style="bold" ]
+  send_channel_endpoint__ret_remove_end -> send_channel_endpoint__foot [ dir="none" style="dashed" ]
   subscription_link__head -> subscription_link__ret_remove_sl [ dir="none" style="bold" ]
   subscription_link__ret_remove_sl -> subscription_link__foot [ dir="none" style="dashed" ]
   receive_channel_end__head -> receive_channel_end__foot [ dir="none" style="bold" ]
@@ -175,6 +191,10 @@ digraph remove_publication_sequence_diagram {
   publication_log__ret_unmap -> conductor__ret_unmap [ label="return" style="dashed" ]
   conductor__destroy -> net_publication__destroy [ headlabel="destroy()" style="solid" ]
   net_publication__ret_destroy -> conductor__ret_destroy [ label="return" style="dashed" ]
+  conductor__decref_end -> send_channel_endpoint__decref_end [ headlabel="decref(client_id)" style="solid" ]
+  send_channel_endpoint__ret_decref_end -> conductor__ret_decref_end  [ label="return" style="dashed" ]
+  conductor__remove_end -> send_channel_endpoint__remove_end [ headlabel="remove_end()" style="solid" ]
+  send_channel_endpoint__ret_remove_end -> conductor__ret_remove_end [ label="return" style="dashed" ]
   conductor__ret_loop_end -> conductor__ret_loop_begin [ label="agent runner loop" dir="none" style="bold" ]
   conductor__ret_loop_begin -> conductor__loop_begin [ style="bold" ]
 }
