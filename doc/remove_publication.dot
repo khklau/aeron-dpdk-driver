@@ -184,7 +184,6 @@ digraph remove_publication_sequence_diagram {
   subscription_link__ret_unlink -> conductor__ret_unlink [ label="return" style="dashed" ]
   conductor__remove_sl -> subscription_link__remove_sl [ headlabel="remove(client_id)" style="solid" ]
   subscription_link__ret_remove_sl -> conductor__ret_remove_sl [ label="return" style="dashed" ]
-  conductor__loop_end -> conductor__ret_loop_end [ dir="none" style="bold" ]
   conductor__remove_pl1 -> publication_link1__remove_pl1 [ headlabel="remove( \n client_id, \n publication_id)" style="solid" ]
   publication_link1__ret_remove_pl1 -> conductor__ret_remove_pl1 [ label="return" style="dashed" ]
   conductor__unmap -> publication_log__unmap [ headlabel="unmap(log_path)" style="solid" ]
@@ -195,6 +194,8 @@ digraph remove_publication_sequence_diagram {
   send_channel_endpoint__ret_decref_end -> conductor__ret_decref_end  [ label="return" style="dashed" ]
   conductor__remove_end -> send_channel_endpoint__remove_end [ headlabel="remove_end()" style="solid" ]
   send_channel_endpoint__ret_remove_end -> conductor__ret_remove_end [ label="return" style="dashed" ]
+
+  conductor__loop_end -> conductor__ret_loop_end [ dir="none" style="bold" ]
   conductor__ret_loop_end -> conductor__ret_loop_begin [ label="agent runner loop" dir="none" style="bold" ]
   conductor__ret_loop_begin -> conductor__loop_begin [ style="bold" ]
 }
