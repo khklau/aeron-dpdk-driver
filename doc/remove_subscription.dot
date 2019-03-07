@@ -1,0 +1,49 @@
+digraph remove_publication_sequence_diagram {
+  client1__head [ label="Client 1" pos="0,0!" shape="record" ];
+  client1__write_close [ pos="0,-1!" shape="point" width="0" ]
+  client1__destroy [ pos="0,-2!" shape="point" width="0" ]
+  client1__foot [ label="Client 1" pos="0,-16!" shape="record" ];
+  client2__head [ label="Client 2" pos="3,0!" shape="record" ];
+  client2__write_remove [ pos="3,-2!" shape="point" width="0" ]
+  client2__foot [ label="Client 2" pos="3,-16!" shape="record" ];
+  to_driver_ringbuf__head [ label="To Driver Ringbuf" pos="6,0!" shape="record" ];
+  on_driver_ringbuf__write_close [ pos="6,-1!" shape="point" width="0" ]
+  to_driver_ringbuf__write_remove [ pos="6,-2!" shape="point" width="0" ]
+  to_driver_ringbuf__read [ pos="6,-3!" shape="point" width="0" ]
+  to_driver_ringbuf__on_cmd_close [ pos="6,-4!" shape="point" width="0" ]
+  to_driver_ringbuf__ret_on_cmd_close [ pos="6,-5!" shape="point" width="0" ]
+  to_driver_ringbuf__on_cmd_remove [ pos="6,-6!" shape="point" width="0" ]
+  to_driver_ringbuf__ret_on_cmd_remove [ pos="6,-14!" shape="point" width="0" ]
+  to_driver_ringbuf__ret_read [ pos="6,-15!" shape="point" width="0" ]
+  to_driver_ringbuf__foot [ label="To Driver Ringbuf" pos="6,-16!" shape="record" ];
+  conductor__head [ label="Conductor" pos="9,0!" shape="record" ];
+  conductor__loop_begin [ pos="9,-1!" shape="point" width="0" ];
+  conductor__ret_loop_begin [ pos="9.5,-1!" shape="point" width="0" ];
+  conductor__read [ pos="9,-3!" shape="point" width="0" ]
+  conductor__on_cmd_close [ pos="9,-4!" shape="point" width="0" ]
+  conductor__ret_on_cmd_close [ pos="9,-5!" shape="point" width="0" ]
+  conductor__loop_end [ pos="9,-15!" shape="point" width="0" ];
+  conductor__ret_loop_end [ pos="9.5,-15!" shape="point" width="0" ];
+  conductor__foot [ label="Conductor" pos="9,-16!" shape="record" ];
+
+  client1__head -> client1__destroy [ dir="none" style="bold" ]
+  client1__destroy -> client1__foot [ dir="none" style="dashed" ]
+  client2__head -> client2__foot [ dir="none" style="bold" ]
+  to_driver_ringbuf__head -> to_driver_ringbuf__foot [ dir="none" style="bold" ]
+  conductor__head -> conductor__loop_begin [ dir="none" style="dashed" ]
+  conductor__loop_begin -> conductor__read [ dir="none" style="bold" ]
+  conductor__read -> conductor__on_cmd_close [ dir="none" style="dashed" ]
+  conductor__on_cmd_close -> conductor__ret_on_cmd_close [ dir="none" style="bold" ]
+  conductor__ret_on_cmd_close -> conductor__loop_end [ dir="none" style="bold" ]
+  conductor__loop_end -> conductor__foot [ dir="none" style="dashed" ]
+
+  client1__write_close -> on_driver_ringbuf__write_close [ headlabel="write( \n CLIENT_CLOSE, \n client_id)" style="solid" ]
+  client2__write_remove -> to_driver_ringbuf__write_remove [ headlabel="write( \n REMOVE_SUBSCRIPTION, \n client_id, \n subscription_id )" style="solid" ]
+  conductor__read -> to_driver_ringbuf__read [ taillabel="read(conductor_on_command)" style="solid" ]
+  to_driver_ringbuf__on_cmd_close -> conductor__on_cmd_close [ headlabel="conductor_on_command( \n CLIENT_CLOSE, \n client_id)" style="solid" ]
+  conductor__ret_on_cmd_close -> to_driver_ringbuf__ret_on_cmd_close [ label="return" style="dashed" ]
+
+  conductor__loop_end -> conductor__ret_loop_end [ dir="none" style="bold" ]
+  conductor__ret_loop_end -> conductor__ret_loop_begin [ label="agent runner loop" dir="none" style="bold" ]
+  conductor__ret_loop_begin -> conductor__loop_begin [ style="bold" ]
+}
